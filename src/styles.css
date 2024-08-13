@@ -1,0 +1,54 @@
+/* src/styles.css */
+.leave-requests, .leave-details, .apply-leave {
+    margin: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+  }
+  
+  button {
+    padding: 8px 12px;
+    margin-right: 8px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #ddd;
+  }
+  
+  button.reject {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  button.reject:hover {
+    background-color: #d32f2f;
+  }
+  
+  .apply-leave form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+  }
+  
+  .apply-leave input, .apply-leave textarea, .apply-leave button {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  

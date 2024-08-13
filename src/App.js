@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import ApplyLeave from './pages/ApplyLeave';
+import LeaveRequests from './pages/LeaveRequests';
+import Login from './pages/Login';
+import LeaveDetails from './components/LeaveDetails';
+import ProtectedRoute from './components/ProtectedRoute';
+import LeaveHistory from './pages/LeaveHistory'; 
+import './styles.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/apply-leave" element={
+        <ProtectedRoute roles={['employee']}>
+          <ApplyLeave />
+        </ProtectedRoute>
+      } />
+      <Route path="/leave-requests" element={
+        <ProtectedRoute roles={['admin', 'employee']}>
+          <LeaveRequests />
+        </ProtectedRoute>
+      } />
+      <Route path="/login" element={<Login />} />
+      <Route path="/leave/:id" element={
+        <ProtectedRoute roles={['admin', 'employee']}>
+          <LeaveDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/leave-history" element={
+        <ProtectedRoute roles={['employee']}>
+          <LeaveHistory />
+        </ProtectedRoute>
+      } />
+    </Routes>
+  </Router>
+);
 
 export default App;
