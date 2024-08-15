@@ -1,12 +1,13 @@
 // src/redux/actions/leaveActions.js
-export const addLeaveRequest = (leaveRequest) => {
+export const addLeaveRequest = (leaveRequest, applicant) => {
   return {
     type: 'ADD_LEAVE_REQUEST',
     payload: {
       ...leaveRequest,
       id: Date.now().toString(),
       status: 'Pending',
-      //history: [], //  history of actions (pending/accepted/rejected)
+      applicant, 
+      // history: [], // history of actions (pending/accepted/rejected)
     },
   };
 };

@@ -1,9 +1,10 @@
-// src/redux/reducers/authReducer.js
 import { LOGIN, LOGOUT } from '../actions/authActions';
+import users from '../users'; 
 
 const initialState = {
   isAuthenticated: false,
   user: null,
+  users: users, 
 };
 
 const authReducer = (state = initialState, action) => {

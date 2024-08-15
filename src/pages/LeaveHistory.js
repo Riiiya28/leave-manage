@@ -1,13 +1,14 @@
 // src/pages/LeaveHistory.js
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const LeaveHistory = () => {
   const { leaveRequests } = useSelector((state) => state.leave);
   const { user } = useSelector((state) => state.auth);
 
-  // leave request based on the loggedin user's name
-  const userRequests = leaveRequests.filter((leave) => leave.applicant === user.name);
+  
+  const userRequests = leaveRequests.filter((leave) => leave.applicant === user.username);
 
   return (
     <div>
@@ -21,6 +22,7 @@ const LeaveHistory = () => {
               <th>Start Date</th>
               <th>End Date</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -31,6 +33,15 @@ const LeaveHistory = () => {
                 <td>{leave.startDate}</td>
                 <td>{leave.endDate}</td>
                 <td>{leave.status}</td>
+                <td>
+                <Link to={`/leave/${leave.id}`}>
+                  <button>View Details</button>
+                </Link>
+                
+                {/* {(user.role === 'admin' && user.managedEmployees.includes(leave.applicant)) && (
+                  <button>Approve/Reject</button>
+                )} */}
+              </td>
               </tr>
             ))}
           </tbody>

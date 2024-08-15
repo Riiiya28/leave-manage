@@ -17,14 +17,20 @@ const LoginForm = () => {
     e.preventDefault();
     let user = null;
 
+    // managedEmployees for each admin
+    const managedEmployees = {
+      admin1: ['employee1'],
+      admin2: ['employee2'],
+    };
+
     if (credentials.username === 'admin1' && credentials.password === 'admin11') {
-      user = { username: 'admin1', role: 'admin', senior: null };
+      user = { username: 'admin1', role: 'admin', managedEmployees: managedEmployees.admin1 };
     } else if (credentials.username === 'admin2' && credentials.password === 'admin22') {
-      user = { username: 'admin2', role: 'admin', senior: 'admin1' };
+      user = { username: 'admin2', role: 'admin', managedEmployees: managedEmployees.admin2 };
     } else if (credentials.username === 'employee1' && credentials.password === 'pass1') {
-      user = { username: 'employee1', role: 'employee', senior: 'admin1' };
+      user = { username: 'employee1', role: 'employee', managedEmployees: [] };
     } else if (credentials.username === 'employee2' && credentials.password === 'pass2') {
-      user = { username: 'employee2', role: 'employee', senior: 'employee1' };
+      user = { username: 'employee2', role: 'employee', managedEmployees: [] };
     }
 
     if (user) {

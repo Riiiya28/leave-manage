@@ -1,6 +1,6 @@
 // src/pages/ApplyLeave.js
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addLeaveRequest } from '../redux/actions/leaveActions';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,11 +11,12 @@ const ApplyLeave = () => {
   const [reason, setReason] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth); // Get current user
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addLeaveRequest({ type, startDate, endDate, reason }));
-    navigate('/leave-history'); 
+    dispatch(addLeaveRequest({ type, startDate, endDate, reason }, user.username));
+    navigate('/leave-history');
   };
 
   return (
