@@ -1,17 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import '../styles.css';
 
 const LeaveRequests = () => {
   const { leaveRequests } = useSelector((state) => state.leave);
   const { user, users } = useSelector((state) => state.auth);
 
-  // current users managed employees for filter
   const managedEmployees = users.find(u => u.username === user.username)?.managedEmployees || [];
 
   
   const filteredRequests = leaveRequests.filter((leave) => {
-    // requests from the current user
     if (leave.applicant === user.username) return true;
 
    
@@ -33,10 +32,15 @@ const LeaveRequests = () => {
 
   return (
     <div className="leave-requests">
+      <Link className="button-link" to="/">Home</Link>
+      <Link className="button-link" to="/leave-requests">Leave Requests</Link>
+
+      {user && <p><h1>{user.username}</h1></p>}
       <h2>Leave Requests</h2>
       <table>
         <thead>
           <tr>
+            <th>Employee</th>
             <th>Type</th>
             <th>Start Date</th>
             <th>End Date</th>
@@ -48,6 +52,7 @@ const LeaveRequests = () => {
         <tbody>
           {filteredRequests.map((leave) => (
             <tr key={leave.id}>
+              <td>{leave.applicant}</td>
               <td>{leave.type}</td>
               <td>{leave.startDate}</td>
               <td>{leave.endDate}</td>
@@ -55,12 +60,8 @@ const LeaveRequests = () => {
               <td>{leave.reason}</td>
               <td>
                 <Link to={`/leave/${leave.id}`}>
-                  <button>View Details</button>
+                  <button className="button-link" >View Details</button>
                 </Link>
-                
-                {/* {(user.role === 'admin' && user.managedEmployees.includes(leave.applicant)) && (
-                  <button>Approve/Reject</button>
-                )} */}
               </td>
             </tr>
           ))}

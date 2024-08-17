@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLeaveRequest } from '../redux/actions/leaveActions';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import '../styles.css';
 
 const ApplyLeave = () => {
   const [type, setType] = useState('');
@@ -11,7 +12,7 @@ const ApplyLeave = () => {
   const [reason, setReason] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth); // Get current user
+  const { user } = useSelector((state) => state.auth); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +21,12 @@ const ApplyLeave = () => {
   };
 
   return (
-    <div className="apply-leave">
+    <div className="apply-leave"> 
+      <Link className="button-link" to="/">Home</Link>
+      <Link className="button-link" to="/apply-leave">Apply Leave</Link>
+      <Link className="button-link" to="/leave-history">Leave History</Link>
+
+      {user && <p><h1>{user.username}</h1></p>}
       <h2>Apply for Leave</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -39,7 +45,7 @@ const ApplyLeave = () => {
           Reason:
           <textarea value={reason} onChange={(e) => setReason(e.target.value)} required />
         </label>
-        <button type="submit">Submit</button>
+        <button className="button-link" type="submit">Submit</button>
       </form>
     </div>
   );

@@ -1,7 +1,8 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { acceptLeave, rejectLeave } from '../redux/actions/leaveActions';
+import '../styles.css';
 
 const LeaveDetails = () => {
   const { id } = useParams();
@@ -16,8 +17,7 @@ const LeaveDetails = () => {
     return <p>Leave request not found.</p>;
   }
 
-  //  employees details to identify their direct senior
-  const requestor = users.find(u => u.username === leaveRequest.applicant);
+  const requestor = users.find((u) => u.username === leaveRequest.applicant);
   const isDirectSenior = requestor?.seniors.includes(user.username);
 
   const handleAccept = () => {
@@ -51,13 +51,24 @@ const LeaveDetails = () => {
         <p>No history available.</p>
       )}
 
-      {/* button - current user is the direct senior  */}
-      {user.role === 'admin' && isDirectSenior && leaveRequest.status === 'Pending' && (
-        <div className="action-buttons">
-          <button onClick={handleAccept}>Accept</button>
-          <button className="reject" onClick={handleReject}>Reject</button>
-        </div>
-      )}
+      <div className="action-buttons">
+        {user.role === 'admin' && isDirectSenior && leaveRequest.status === 'Pending' && (
+          <>
+            <button onClick={handleAccept}>Accept</button>
+            <button className="reject" onClick={handleReject}>Reject</button>
+          </>
+        )}
+
+        {user.role === 'admin' ? (
+          <div>
+            <Link className="button-link" to="/leave-requests">Go to Leave Requests</Link>
+          </div>
+        ) : (
+          <div>
+            <Link className="button-link" to="/leave-history">Go to Leave History</Link>
+          </div>
+        )}
+      </div>
 
       {leaveRequest.status !== 'Pending' && (
         <p>This leave request has already been {leaveRequest.status.toLowerCase()}.</p>

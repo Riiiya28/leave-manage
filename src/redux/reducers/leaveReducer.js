@@ -1,6 +1,11 @@
 // src/redux/reducers/leaveReducer.js
+
 const initialState = {
   leaveRequests: JSON.parse(localStorage.getItem('leaveRequests')) || [],
+  totalLeaves: {
+    employee1: 30,
+    employee2: 30,
+  },
 };
 
 const leaveReducer = (state = initialState, action) => {

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/actions/authActions';
 import { useNavigate } from 'react-router-dom';
+import '../styles.css';
 
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -42,10 +43,10 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form-inline">
       <input name="username" placeholder="Username" onChange={handleChange} required />
       <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-      <button type="submit">Login</button>
+      <button className="button-link" type="submit">Login</button>
     </form>
   );
 };

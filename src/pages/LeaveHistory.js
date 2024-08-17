@@ -2,6 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import '../styles.css';
 
 const LeaveHistory = () => {
   const { leaveRequests } = useSelector((state) => state.leave);
@@ -12,6 +13,11 @@ const LeaveHistory = () => {
 
   return (
     <div>
+      <Link className="button-link" to="/">Home</Link>
+      <Link className="button-link" to="/apply-leave">Apply Leave</Link>
+      <Link className="button-link" to="/leave-history">Leave History</Link>
+
+      {user && <p><h1>{user.username}</h1></p>}
       <h2>Leave History</h2>
       {userRequests.length > 0 ? (
         <table>
@@ -35,12 +41,8 @@ const LeaveHistory = () => {
                 <td>{leave.status}</td>
                 <td>
                 <Link to={`/leave/${leave.id}`}>
-                  <button>View Details</button>
-                </Link>
-                
-                {/* {(user.role === 'admin' && user.managedEmployees.includes(leave.applicant)) && (
-                  <button>Approve/Reject</button>
-                )} */}
+                  <button className="button-link" >View Details</button>
+                </Link> 
               </td>
               </tr>
             ))}

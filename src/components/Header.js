@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/actions/authActions';
+import '../styles.css';
 
 const Header = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -18,20 +19,20 @@ const Header = () => {
     <header>
       <nav>
         <ul>
-          <li><Link to="/">Home</Link></li>
+          <Link className="button-link" to="/">Home</Link>
           {isAuthenticated && user.role === 'employee' && (
             <>
-              <li><Link to="/apply-leave">Apply Leave</Link></li>
-              <li><Link to="/leave-history">Leave History</Link></li>
+              <Link className="button-link" to="/apply-leave">Apply Leave</Link>
+              <Link className="button-link" to="/leave-history">Leave History</Link>
             </>
           )}
           {isAuthenticated && user.role === 'admin' && (
-            <li><Link to="/leave-requests">Leave Requests</Link></li>
+            <Link className="button-link" to="/leave-requests">Leave Requests</Link>
           )}
           {isAuthenticated ? (
-            <li><button onClick={handleLogout}>Logout</button></li>
+            <button className="button-link" onClick={handleLogout}>Logout</button>
           ) : (
-            <li><Link to="/login">Login</Link></li>
+            <Link className="button-link" to="/login">Login</Link>
           )}
         </ul>
       </nav>
