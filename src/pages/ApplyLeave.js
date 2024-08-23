@@ -12,16 +12,34 @@ const ApplyLeave = () => {
   const [reason, setReason] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth); 
+  const { user } = useSelector((state) => state.auth);
+  const { leaveRequests } = useSelector((state) => state.leave);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addLeaveRequest({ type, startDate, endDate, reason }, user.username));
-    navigate('/leave-history');
+
+    const hasClashingLeave = leaveRequests.some(leave => {
+      if (leave.applicant !== user.username || (leave.status !== 'Accepted' && leave.status !== 'Pending')) return false;
+    
+      const existingStart = new Date(leave.startDate);
+      const existingEnd = new Date(leave.endDate);
+      const newStart = new Date(startDate);
+      const newEnd = new Date(endDate);
+    
+      return (newStart <= existingEnd && newEnd >= existingStart);
+    });
+    
+
+    if (hasClashingLeave) {
+      alert("You already have an accepted/pending leave request that overlaps with these dates. Please revoke the previous leave or select different dates.");
+    } else {
+      dispatch(addLeaveRequest({ type, startDate, endDate, reason }, user.username));
+      navigate('/leave-history');
+    }
   };
 
   return (
-    <div className="apply-leave"> 
+    <div className="apply-leave">
       <Link className="button-link" to="/">Home</Link>
       <Link className="button-link" to="/apply-leave">Apply Leave</Link>
       <Link className="button-link" to="/leave-history">Leave History</Link>
@@ -52,3 +70,4 @@ const ApplyLeave = () => {
 };
 
 export default ApplyLeave;
+

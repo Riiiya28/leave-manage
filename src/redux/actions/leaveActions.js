@@ -1,27 +1,27 @@
 // src/redux/actions/leaveActions.js
-export const addLeaveRequest = (leaveRequest, applicant) => {
-  return {
-    type: 'ADD_LEAVE_REQUEST',
-    payload: {
-      ...leaveRequest,
-      id: Date.now().toString(),
-      status: 'Pending',
-      applicant, 
-      // history: [], // history of actions (pending/accepted/rejected)
-    },
-  };
-};
+export const ADD_LEAVE_REQUEST = 'ADD_LEAVE_REQUEST';
+export const ACCEPT_LEAVE = 'ACCEPT_LEAVE';
+export const REJECT_LEAVE = 'REJECT_LEAVE';
+export const REVOKE_LEAVE = 'REVOKE_LEAVE'; 
 
-export const acceptLeave = (id, approver) => {
-  return {
-    type: 'ACCEPT_LEAVE',
-    payload: { id, approver },
-  };
-};
+export const addLeaveRequest = (leaveRequest, applicant) => ({
+  type: ADD_LEAVE_REQUEST,
+  payload: { leaveRequest, applicant },
+});
 
-export const rejectLeave = (id, approver) => {
-  return {
-    type: 'REJECT_LEAVE',
-    payload: { id, approver },
-  };
-};
+export const acceptLeave = (id, approver) => ({
+  type: ACCEPT_LEAVE,
+  payload: { id, approver },
+});
+
+export const rejectLeave = (id, approver) => ({
+  type: REJECT_LEAVE,
+  payload: { id, approver },
+});
+
+export const revokeLeave = (id) => ({
+  type: REVOKE_LEAVE,
+  payload: { id }, 
+});
+
+

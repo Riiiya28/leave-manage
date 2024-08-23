@@ -7,13 +7,18 @@ import LeaveRequests from './pages/LeaveRequests';
 import Login from './pages/Login';
 import LeaveDetails from './components/LeaveDetails';
 import ProtectedRoute from './components/ProtectedRoute';
-import LeaveHistory from './pages/LeaveHistory'; 
+import LeaveHistory from './pages/LeaveHistory';
 import './styles.css';
 
 const App = () => (
   <Router>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={
+        <ProtectedRoute>
+          <Home />
+        </ProtectedRoute>
+      } />
       <Route path="/apply-leave" element={
         <ProtectedRoute roles={['employee']}>
           <ApplyLeave />

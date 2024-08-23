@@ -1,14 +1,18 @@
-// src/pages/LeaveHistory.js
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { revokeLeave } from '../redux/actions/leaveActions';
 import '../styles.css';
 
 const LeaveHistory = () => {
   const { leaveRequests } = useSelector((state) => state.leave);
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  
+  const handleRevoke = (id) => {
+    dispatch(revokeLeave(id));
+  };
+
   const userRequests = leaveRequests.filter((leave) => leave.applicant === user.username);
 
   return (
@@ -40,10 +44,13 @@ const LeaveHistory = () => {
                 <td>{leave.endDate}</td>
                 <td>{leave.status}</td>
                 <td>
-                <Link to={`/leave/${leave.id}`}>
-                  <button className="button-link" >View Details</button>
-                </Link> 
-              </td>
+                  <Link to={`/leave/${leave.id}`}>
+                    <button className="button-link">View Details</button>
+                  </Link>
+                  {(leave.status === 'Accepted' && new Date(leave.startDate) >= new Date()) || (leave.status === 'Pending' && new Date(leave.startDate) >= new Date()) ? (
+                    <button className="button-link" onClick={() => handleRevoke(leave.id)}>Revoke</button>
+                  ) : null}
+                </td>
               </tr>
             ))}
           </tbody>
